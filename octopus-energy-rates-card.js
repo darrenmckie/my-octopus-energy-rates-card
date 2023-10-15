@@ -44,6 +44,9 @@ class OctopusEnergyRatesCard extends HTMLElement {
             td.time_orange{
                 border-bottom: 1px solid orange;
             }
+            td.time_yellow{
+                border-bottom: 1px solid yellow;
+            }
             td.time_green{
                 border-bottom: 1px solid MediumSeaGreen;
             }
@@ -67,6 +70,10 @@ class OctopusEnergyRatesCard extends HTMLElement {
                 border: 2px solid orange;
                 background-color: orange;
             }
+            td.yellow {
+                border: 2px solid yellow;
+                background-color: yellow;
+            }
             td.green {
                 border: 2px solid MediumSeaGreen;
                 background-color: MediumSeaGreen;
@@ -81,13 +88,14 @@ class OctopusEnergyRatesCard extends HTMLElement {
             this.appendChild(card);
         }
 
-        const colours_import = [ 'green', 'red', 'orange', 'blue' ];
+        const colours_import = [ 'green', 'red', 'orange', 'yellow', 'blue' ];
         const colours_export = [ 'red', 'green', 'orange' ];
 
         const entityId = config.entity;
         const state = hass.states[entityId];
         const attributes = this.reverseObject(state.attributes);
         const stateStr = state ? state.state : 'unavailable';
+        const lowlimit = config.lowlimit;
         const mediumlimit = config.mediumlimit;
         const highlimit = config.highlimit;
         const unitstr = config.unitstr;
@@ -139,7 +147,8 @@ class OctopusEnergyRatesCard extends HTMLElement {
             var colour = colours[0];
             if(key.value_inc_vat > config.highlimit) colour = colours[1];
             else if(key.value_inc_vat > config.mediumlimit) colour = colours[2];
-            else if(key.value_inc_vat <= 0 ) colour = colours[3];
+            else if(key.value_inc_vat > config.lowlimit) colour = colours[3];
+            else if(key.value_inc_vat <= 0 ) colour = colours[4];
 
             if(showpast || (date - Date.parse(new Date())>-1800000)) {
                 table = table.concat("<tr class='rate_row'><td class='time time_"+colour+"'>" + date_locale + time_locale + 
@@ -205,8 +214,9 @@ class OctopusEnergyRatesCard extends HTMLElement {
             // If the price is above mediumlimit, the row is marked yellow.
             // If the price is below mediumlimit, the row is marked green.
             // If the price is below 0, the row is marked blue.
+            lowlimit: 15,
             mediumlimit: 20,
-            highlimit: 30,
+            highlimit: 26,
             // Controls the rounding of the units of the rate
             roundUnits: 2,
             // The unit string to show if units are shown after each rate
@@ -231,7 +241,7 @@ class OctopusEnergyRatesCard extends HTMLElement {
     }
 }
 
-customElements.define('octopus-energy-rates-card', OctopusEnergyRatesCard);
+customElements.define('my-octopus-energy-rates-card', OctopusEnergyRatesCard);
 // Configure the preview in the Lovelace card picker
 window.customCards = window.customCards || [];
 window.customCards.push({
