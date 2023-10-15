@@ -16,7 +16,7 @@ The easiest way to install it is via [HACS (Home Assistant Community Store)](htt
 
 Simply click this button to go directly to the details page:
 
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=lozzd&repository=octopus-energy-rates-card&category=plugin)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=darrenmckie&repository=my-octopus-energy-rates-card&category=plugin)
     
 In the Home Assistant UI:
 * use HACS -> Frontend -> Top Right Menu -> Custom repositories
